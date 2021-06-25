@@ -56,7 +56,7 @@ while [[ $# -ge 1 ]]; do
       tmpTARGET="$1"
       case $tmpTARGET in
         debianbase) tmpTARGETMODE='1' ;;
-        minstackos|qemuraw) [[ "$tmpHOST" != '2' && "$tmpTARGET" == 'minstackos' ]] && tmpTARGETMODEL=1 || tmpTARGETMODEL='0';[[ "$tmpTARGETMODE" != '1' ]] && read -s -n1 -p "instmode detected" && tmpTARGETDDURL=$custIMGMIRROR/imgsori/xa || read -s -n1 -p "genmode detected,a bridge interface on host with dhcp/dns support needed in advance,or the scripts will fail,press any key to continue or ctlc to exit ... " ;;
+        minstackos|qemuraw) [[ "$tmpHOST" != '2' && "$tmpTARGET" == 'minstackos' ]] && tmpTARGETMODEL=1 || tmpTARGETMODEL='0';[[ "$tmpTARGETMODE" != '1' ]] && read -s -n1 -p "instmode detected" && tmpTARGETDDURL=$custIMGMIRROR/imgs/xa || read -s -n1 -p "genmode detected,a bridge interface on host with dhcp/dns support needed in advance,or the scripts will fail,press any key to continue or ctlc to exit ... " ;;
         deepin20|win10ltsc|winsrv2019|dsm61715284|osx10146) tmpTARGETMODE='0';tmpTARGETDDURL=${custIMGMIRROR2//minstack/images}/$tmpTARGET".gz" ;;
         *) echo "$tmpTARGET" |grep -q '^http://\|^ftp://\|^https://';[[ $? -ne '0' ]] && echo "targetname not known" && exit 1 || read -s -n1 -p "raw urls detected" && tmpTARGETDDURL=$tmpTARGET ;;
       esac
@@ -662,7 +662,7 @@ sleep 2s && echo -en "\nprocessing grub ......"
     # wget -qO- '$DDURL' |gzip -dc |dd of=$(list-devices disk |head -n1)|(pv -s \$IMGSIZE -n) 2&>1|dialog --gauge "progress" 10 70 0
     [[ "$UNZIP" == '0' ]] && PIPECMDSTR='wget -qO- '$tmpTARGETDDURL' |dd of=$(list-devices disk |head -n1)';
     [[ "$UNZIP" == '1' && "$tmpTARGET" != 'minstackos' ]] && PIPECMDSTR='wget -qO- '$tmpTARGETDDURL' |tar zOx |dd of=$(list-devices disk |head -n1)';
-    [[ "$tmpTARGET" == 'minstackos' || "$tmpTARGET" == 'qemuraw' ]] && PIPECMDSTR='(for i in a b c d e f g h i j k l m n o;do wget -qO- '$tmpTARGETDDURL'$i; done)|tar zOx |dd of=$(list-devices disk |head -n1)';
+    [[ "$tmpTARGET" == 'minstackos' || "$tmpTARGET" == 'qemuraw' ]] && PIPECMDSTR='(for i in a b c d e f g h i;do wget -qO- '$tmpTARGETDDURL'$i; done)|tar zOx |dd of=$(list-devices disk |head -n1)';
     [[ "$UNZIP" == '2' ]] && PIPECMDSTR='wget -qO- '$tmpTARGETDDURL' |gzip -dc |dd of=$(list-devices disk |head -n1)';
 
     cat >$topdir/$remasteringdir/initramfs/preseed.cfg<<EOF
