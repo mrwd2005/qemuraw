@@ -302,7 +302,7 @@ function getpkgs(){
             cursubpkgfilename2=$(echo $cursubpkgfilename|sed "s/\(+\|~\)/-/g")
 
             echo -en "\033[s \033[K [ \033[32m ${cursubpkgfilename2:0:10} \033[0m ] \033[u"
-            [[ ! -f $downdir/debian/$cursubpkgfilepath/$cursubpkgfilename2 ]] && wget --no-check-certificate -qO $downdir/debian/$cursubpkgfilepath/$cursubpkgfilename2 $MIRROR/imgs/debian/$cursubpkgfile && [[ $? -ne '0' ]] && echo "download failed" && exit 1; \
+            [[ ! -f $downdir/debian/$cursubpkgfilepath/$cursubpkgfilename2 ]] && wget --no-check-certificate -qO $downdir/debian/$cursubpkgfilepath/$cursubpkgfilename2 $MIRROR/mirror/debian/$cursubpkgfile && [[ $? -ne '0' ]] && echo "download failed" && exit 1; \
 
           done
             # [[ ! -f  /tmp/boot/${OPTPKGS["bin"$pkg]}2 ]] && echo 'Error! $1 SUPPORT ERROR.' && exit 1;
