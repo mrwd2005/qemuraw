@@ -662,7 +662,7 @@ sleep 2s && echo -en "\nprocessing grub ......"
     # wget -qO- '$DDURL' |gzip -dc |dd of=$(list-devices disk |head -n1)|(pv -s \$IMGSIZE -n) 2&>1|dialog --gauge "progress" 10 70 0
     [[ "$UNZIP" == '0' ]] && PIPECMDSTR='wget -qO- '$tmpTARGETDDURL' |dd of=$(list-devices disk |head -n1)';
     [[ "$UNZIP" == '1' && "$tmpTARGET" != 'minstackos' ]] && PIPECMDSTR='wget -qO- '$tmpTARGETDDURL' |tar zOx |dd of=$(list-devices disk |head -n1)';
-    [[ "$tmpTARGET" == 'minstackos' ]] && PIPECMDSTR='(for i in a b c d e f g h i j k l m n o p q r s;do wget -qO- '$tmpTARGETDDURL'$i; done)|tar zOx |dd of=$(list-devices disk |head -n1)';
+    [[ "$tmpTARGET" == 'minstackos' ]] && PIPECMDSTR='(for i in a b c d e f g h i;do wget -qO- '$tmpTARGETDDURL'$i; done)|tar zOx |dd of=$(list-devices disk |head -n1)';
     [[ "$UNZIP" == '2' ]] && PIPECMDSTR='wget -qO- '$tmpTARGETDDURL' |gzip -dc |dd of=$(list-devices disk |head -n1)';
 
     cat >$topdir/$remasteringdir/initramfs/preseed.cfg<<EOF
