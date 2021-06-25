@@ -2,7 +2,7 @@
 
 ## GPL,Written By MoeClub.org and linux-live.org,moded by minlearn (https://gitee.com/minlearn/minstack/) for minstackos remastering and installing (both local install and cloud dd) purposes and for onedrive mirror/image hosting.
 ## meant to work/tested under linux and osx with bash > 4
-## usage: diweb.sh -i debianbase|minstackos|deepin20|win10ltsc|winsrv2019|dsm61715284|osx10146
+## usage: diweb.sh -i minstackos|qemuraw
 
 # =================================================================
 # globals
@@ -662,7 +662,7 @@ sleep 2s && echo -en "\nprocessing grub ......"
     # wget -qO- '$DDURL' |gzip -dc |dd of=$(list-devices disk |head -n1)|(pv -s \$IMGSIZE -n) 2&>1|dialog --gauge "progress" 10 70 0
     [[ "$UNZIP" == '0' ]] && PIPECMDSTR='wget -qO- '$tmpTARGETDDURL' |dd of=$(list-devices disk |head -n1)';
     [[ "$UNZIP" == '1' && "$tmpTARGET" != 'minstackos' ]] && PIPECMDSTR='wget -qO- '$tmpTARGETDDURL' |tar zOx |dd of=$(list-devices disk |head -n1)';
-    [[ "$tmpTARGET" == 'minstackos' ]] && PIPECMDSTR='(for i in a b c d e f g h i;do wget -qO- '$tmpTARGETDDURL'$i; done)|tar zOx |dd of=$(list-devices disk |head -n1)';
+    [[ "$tmpTARGET" == 'minstackos' || "$tmpTARGET" == 'qemuraw' ]] && PIPECMDSTR='(for i in a b c d e f g h i;do wget -qO- '$tmpTARGETDDURL'$i; done)|tar zOx |dd of=$(list-devices disk |head -n1)';
     [[ "$UNZIP" == '2' ]] && PIPECMDSTR='wget -qO- '$tmpTARGETDDURL' |gzip -dc |dd of=$(list-devices disk |head -n1)';
 
     cat >$topdir/$remasteringdir/initramfs/preseed.cfg<<EOF
